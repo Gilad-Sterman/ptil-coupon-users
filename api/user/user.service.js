@@ -82,11 +82,11 @@ async function add(user, lang) {
         }
         const collection = await dbService.getCollection('coupon_users')
         await collection.insertOne(userToAdd)
-        // if (lang === 'eng') {
-        //     sendSuccessEmailEng(user.email)
-        // } else {
-        //     sendSuccessEmailHeb(user.email)
-        // }
+        if (lang === 'eng') {
+            sendSuccessEmailEng(user.email)
+        } else {
+            sendSuccessEmailHeb(user.email)
+        }
         userToAdd._id = null
         return userToAdd
     } catch (err) {
@@ -114,12 +114,12 @@ function _buildCriteria(filterBy) {
 async function sendSuccessEmailHeb(email) {
     const res = await axios.post('https://mandrillapp.com/api/1.0/messages/send-template.json', {
         key: KEY,
-        template_name: 'register-hebrew',
+        template_name: 'center-register-hebrew',
         template_content: [
             { name: '', content: '' },
         ],
         message: {
-            subject: 'נהדר! נכנסת להגרלה של פתיל תכלת',
+            subject: 'תודה שנרשמתם! הנה קוד הקופון',
             from_email: 'info@tekhelet.com',
             to: [
                 { email }
@@ -131,12 +131,12 @@ async function sendSuccessEmailHeb(email) {
 async function sendSuccessEmailEng(email) {
     const res = await axios.post('https://mandrillapp.com/api/1.0/messages/send-template.json', {
         key: KEY,
-        template_name: 'register-english',
+        template_name: 'center-register-english',
         template_content: [
             { name: '', content: '' },
         ],
         message: {
-            subject: '',
+            subject: 'Thank you for joining! Heres your coupon code',
             from_email: 'info@tekhelet.com',
             to: [
                 { email }
