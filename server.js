@@ -43,9 +43,13 @@ import { userRoutes } from './api/user/user.routes.js'
 app.use('/api/user', userRoutes)
 
 
-app.get('/**', (req, res) => {
-    console.log('hi');
-    res.sendFile(path.resolve('public/index.html'))
+// app.get('/**', (req, res) => {
+//     console.log('hi');
+//     res.sendFile(path.resolve('public/index.html'))
+// })
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 
